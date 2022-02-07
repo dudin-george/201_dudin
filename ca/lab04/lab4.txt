@@ -1,0 +1,116 @@
+Exercise 1.
+
+0x6c6c6337
+Firstly, let's transform it to binary: 0110 1100 0110 1100 0110 0011 0011 0111
+So, the code is lui x6, 0x6C6C6
+	
+0x54830313
+Firstly, let's transform it to binary: 010101001000 00110 000 00110 0010011
+So, the code is addi x6, x6, 1352
+
+0x412033b7
+Firstly, let's transform it to binary: 01000001001000000011 00111 0110111
+So, the code is lui x7, 0x41203
+
+0xc6f38393
+Firstly, let's transform it to binary: 110001101111 00111 000 00111 0010011
+So, the code is addi x7, x7, -913
+
+0x00535e37
+Firstly, let's transform it to binary: 010100110101 11100 0110111
+So, the code is lui x28, 1333
+
+0xf43e0e13
+Firstly, let's transform it to binary: 111101000011 11100 000 11100 0010011
+So, the code is addi x28, x28, -189
+
+0x10010437
+Firstly, let's transform it to binary: 00010000000000010000 01000 0110111
+So, the code is lui x8, 65552
+
+0x00040413
+Firstly, let's transform it to binary: 000000000000 01000 000 01000 0010011
+So, the code is addi x8, x8, 0
+	
+
+0x00642023
+Firstly, let's transform it to binary: 0000000 00110 01000 010 00000 0100011
+So, the code is sw x6, 0(x8)
+
+
+0x00742223
+Firstly, let's transform it to binary: 0000000 00111 01000 010 00100 0100011
+So, the code is sw x7, 4(x8)
+
+0x01c42423
+Firstly, let's transform it to binary: 0000000 11100 01000 010 01000 0100011
+So, the code is sw x28, 8(x8)
+
+0x00400893
+Firstly, let's transform it to binary: 0000000000100 00000 000 10001 0010011
+So, the code is addi x17, x0, 4
+
+0x00800533
+Firstly, let's transform it to binary: 000000001000 00000 000 01010 0110011
+So, the code is add x10, x0, x8
+
+0x00000073
+Firstly, let's transform it to binary: 0000 0000 0000 0000 0000 00000 1110011
+So, the code is ecall
+
+
+Exercise 2.
+
+
+.text
+li    a7, 5
+ecall
+mv   t1, a0     
+srli t0, a0, 31 
+ecall
+mv   t4, a0     
+srli t3, a0, 31 
+beq t1, zero, sixth
+beq t4, zero, sixth
+beq t0, zero, first   
+xori t1, t1, -1
+addi t1, t1, 1
+
+first:
+beq t3, zero,  second 
+xori t4, t4, -1
+addi t4, t4, 1
+
+second:
+bge t1, t4, third
+xor t4, t4, t1
+xor t1, t4, t1
+xor t4, t4, t1
+
+third:
+add t2, zero, zero
+
+fourth:
+add t2, t2, t1
+addi t4, t4, -1
+bgtz t4, fourth
+xor   t6, t0, t3
+beq t6, zero, fifth
+xori t2, t2,-1
+addi t2, t2, 1
+
+fifth:
+addi a7, zero, 1 
+add a0, zero, t2
+ecall
+li a7,  10
+ecall
+
+sixth:
+addi a7, zero, 1
+add a0,  zero, zero 
+ecall 
+addi a7, zero, 10 
+ecall
+
+
