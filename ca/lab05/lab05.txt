@@ -1,0 +1,199 @@
+Exercise 1.
+
+.include "macrolib.s"
+
+li a7, 1
+mv a0, t0
+ecall
+
+li a7, 1
+mv a0, t1
+ecall
+
+li a7, 1
+mv a0, t2
+ecall
+
+li a7, 1
+mv a0, t3
+ecall
+
+add t0, t0, t2
+add t1, t1, t3
+
+li a7, 1
+mv a0, t0
+ecall
+
+li a7, 11
+li a0, '\n'
+ecall
+
+li a7, 1
+mv a0, t1
+ecall
+
+Exercise 2.
+
+.include "macrolib.s"
+li a7, 1
+mv a0, t0
+ecall
+
+mv t1, t0
+addi t2, zero, 10
+
+first:
+beqz t1, end
+div t1, t1, t2
+addi t3, t3, 1 
+j first
+end: 
+addi t5, zero, 10
+
+addi t4, t4, 0
+
+second:
+beqz t3, end2
+rem t2, t0, t5
+add t4, t4, t2
+div t0, t0, t5
+addi t3, t3, -1
+j second
+
+end2:
+blez t4, third
+j fourth
+third:
+addi t5, zero, -1
+mul t4, t4, t5
+fourth:
+li a7, 1
+mv a0, t4
+ecall
+
+
+Exercise 3.
+
+.include "macrolib.s"
+li a7, 1
+mv a0, t0
+ecall
+
+addi t2, zero, 1
+add t3, t3, zero
+addi t4, t4, -1
+first:
+beqz t0, end
+li a7, 1
+mv a0, t1
+ecall
+
+mul t1, t1, t2
+mul t2, t2, t4
+add t3, t3, t1
+addi t0, t0, -1
+j first
+end:
+li a7, 1
+mv a0, t3
+ecall
+
+
+Exercise 4.
+
+
+.include "macrolib.s"
+
+.data
+arr: 
+
+.text
+li a7, 1
+mv a0, t0
+ecall
+la t4, arr
+addi t5, zero, 0
+
+first:
+beqz t0, end
+addi t0, t0, -1
+li a7, 1
+mv a0, t1
+ecall
+addi t3, zero, 2
+rem t2, t1, t3
+beqz t2, second
+j first
+
+second:
+add t6, t4, t5
+sw t1, 0(t6)
+addi t5, t5, 4
+j first
+
+end:
+lw t1, 0(t6)
+li a7, 1
+mv a0, t1
+ecall
+li a7, 11
+li a0, '\n'
+ecall
+beq t4, t6, finish
+addi t6, t6, -4
+j end
+
+finish:
+
+
+Exercise 5.
+
+.include "macrolib.s"
+.data 
+vec:
+
+.text
+
+li a7, 5
+ecall
+mv t0, a0 
+la t1, vec
+add t3, t1, zero 
+add t5, t1, zero 
+
+loop:
+beqz t0, end
+addi t0, t0, -1
+li a7, 5
+ecall
+mv t2, a0 
+addi t3, t5, 0
+
+check1:
+lw t4, 0(t3)
+beq t4, t2, loop
+beq t3, t1, check2
+addi t3, t3, -4
+j check1
+
+check2:
+sw t2, 0(t5)
+addi t5, t5, 4
+j loop
+
+
+
+end:
+beq t1, t5, finish
+lw t4, 0(t1)
+li a7, 1
+mv a0, t4
+ecall
+li a7, 11
+li a0, '\n'
+ecall
+addi t1, t1, 4
+j end
+
+finish:
